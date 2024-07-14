@@ -50,6 +50,10 @@ namespace UnityChan
 		static int jumpState = Animator.StringToHash ("Base Layer.Jump");
 		static int restState = Animator.StringToHash ("Base Layer.Rest");
 
+		//音を鳴らすための準備
+    	AudioSource audioSource;
+    	public AudioClip jumpsound; //ジャンプの時の音
+
 		// 初期化
 		void Start ()
 		{
@@ -63,6 +67,9 @@ namespace UnityChan
 			// CapsuleColliderコンポーネントのHeight、Centerの初期値を保存する
 			orgColHight = col.height;
 			orgVectColCenter = col.center;
+
+			//音を鳴らす準備その2
+        	audioSource = GetComponent<AudioSource>();
 		}
 	
 	
@@ -98,6 +105,8 @@ namespace UnityChan
 					if (!anim.IsInTransition (0)) {
 						rb.AddForce (Vector3.up * jumpPower, ForceMode.VelocityChange);
 						anim.SetBool ("Jump", true);		// Animatorにジャンプに切り替えるフラグを送る
+
+						audioSource.PlayOneShot(jumpsound);
 					}
 				}
 			}
