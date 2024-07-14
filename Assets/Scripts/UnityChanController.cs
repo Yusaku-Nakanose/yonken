@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class UnityChanController : MonoBehaviour
 {
+    //アニメーションをつけて動かすための準備
     private Animator anim;
+    //音を鳴らすための準備
+    AudioSource audioSource;
+    public AudioClip jumpsound; //ジャンプの時の音
+    public AudioClip runningsound; //走っている間の音
     // Start is called before the first frame update
     void Start()
     {
+        //音を鳴らす準備その2
+        audioSource = GetComponent<AudioSource>();
+        //用意されているアニメーションをとってくる
         anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
+    //FixedUpadate = 一定時間ごと、Update = 毎フレーム、らしい
     void FixedUpdate()
     {
         float h = Input.GetAxis("Horizontal");
@@ -28,6 +37,9 @@ public class UnityChanController : MonoBehaviour
         {
             GetComponent<Rigidbody>().AddForce(Vector3.up);
             anim.SetBool("Jump", true);
+            audioSource.PlayOneShot(jumpsound);
         }
+        
+        
     }
 }
